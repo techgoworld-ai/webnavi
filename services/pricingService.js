@@ -1,5 +1,5 @@
 const { getDb } = require('./db');
-const hostyIndia = require('./hostyIndia');
+const hostyIndia = require('./hostyindia');
 
 /**
  * Normalizes TLD string (e.g., 'com' -> '.com', '.IN' -> '.in')
