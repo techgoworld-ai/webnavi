@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Sign In — WebNavi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300FFA8' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 17 9 7 12 13 15 7 20 17'/></svg>">
+  <link rel="icon" type="image/svg+xml" href="/webnavi-logo-mark.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background: #03140e;
+      color: #d7e0db;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-nav {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid #143326;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .auth-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+    }
+    .auth-card {
+      background: #051912;
+      border: 1px solid #1a382d;
+      border-radius: 14px;
+      padding: 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    }
+    .auth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0, 229, 153, 0.12);
+      border: 1px solid rgba(0, 229, 153, 0.3);
+      color: #00e599;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    h1 {
+      color: #ffffff;
+      margin: 0 0 0.5rem 0;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: #9ab3a8;
+      font-size: 0.88rem;
+      margin: 0 0 1.75rem 0;
+      line-height: 1.5;
+    }
+    .input-group {
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      color: #8ba396;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: #020c08;
+      border: 1px solid #1a382d;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      border-color: #ffd43b;
+      box-shadow: 0 0 0 2px rgba(255, 212, 59, 0.15);
+    }
+    .remember-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.82rem;
+    }
+    .remember-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #9ab3a8;
+      cursor: pointer;
+      text-transform: none;
+      font-weight: normal;
+    }
+    .forgot-link {
+      color: #ffd43b;
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+    .forgot-link:hover {
+      text-decoration: underline;
+      color: #ffe066;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: #ffd43b;
+      color: #020c08;
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #ffe066;
+    }
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .error-msg {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      margin-bottom: 1.5rem;
+      display: none;
+      line-height: 1.45;
+    }
+    .info-footer-note {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #143326;
+      font-size: 0.8rem;
+      color: #7b9489;
+      line-height: 1.5;
+      text-align: center;
+    }
+    .info-footer-note a {
+      color: #00e599;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .info-footer-note a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Notification Bar -->
+  <div class="top-bar">
+    <span class="top-bar-badge">EARLY ACCESS V1.0</span>
+    <span>Small Business Owners: Get a 100% Free Professional Website for Life! No agency fees, no subscriptions, zero hidden charges.</span>
+  </div>
+
+  <!-- Identical Site Navigation Bar -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="brand">
+        <span class="brand-glyph">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+            <polyline points="4 17 9 7 12 13 15 7 20 17" />
+          </svg>
+        </span>
+        <span>WebNavi</span>
+      </a>
+
+
+
+      <div class="nav-actions">
+        <!-- Interactive Flag Switcher -->
+        <button type="button" id="navbarCurrencyToggle" class="currency-toggle-btn flag-only-btn"
+          title="Toggle Country / Currency">
+          <span class="flag" id="navFlag">
+            <svg class="flag-icon" width="22" height="15" viewBox="0 0 640 480" style="border-radius:2px; vertical-align:middle; display:inline-block; flex-shrink:0;" aria-label="India Flag"><path fill="#FF9933" d="M0 0h640v160H0z"/><path fill="#FFFFFF" d="M0 160h640v160H0z"/><path fill="#128807" d="M0 320h640v160H0z"/><g transform="translate(320 240)"><circle r="40" fill="none" stroke="#000080" stroke-width="5"/><circle r="8" fill="#000080"/><g stroke="#000080" stroke-width="2"><line x1="0" y1="-40" x2="0" y2="40"/><line x1="-40" y1="0" x2="40" y2="0"/><line x1="-28.28" y1="-28.28" x2="28.28" y2="28.28"/><line x1="-28.28" y1="28.28" x2="28.28" y2="-28.28"/><line x1="-36.95" y1="-15.3" x2="36.95" y2="15.3"/><line x1="-36.95" y1="15.3" x2="36.95" y2="-36.95"/><line x1="-15.3" y1="-36.95" x2="15.3" y2="36.95"/><line x1="-15.3" y1="36.95" x2="15.3" y2="-36.95"/><line x1="-39.23" y1="-7.8" x2="39.23" y2="7.8"/><line x1="-39.23" y1="7.8" x2="39.23" y2="-7.8"/><line x1="-7.8" y1="-39.23" x2="7.8" y2="39.23"/><line x1="-7.8" y1="39.23" x2="7.8" y2="-39.23"/><line x1="-33.26" y1="-22.25" x2="33.26" y2="22.25"/><line x1="-33.26" y1="22.25" x2="33.26" y2="-22.25"/><line x1="-22.25" y1="-33.26" x2="22.25" y2="33.26"/><line x1="-22.25" y1="33.26" x2="22.25" y2="-33.26"/></g></g></svg>
+          </span>
+          <span class="code" id="navCurrencyCode" style="display:none;"></span>
+        </button>
+
+        <a href="/login" class="nav-link" id="navCustomerLink" style="font-size:0.85rem; font-weight:600; text-decoration:none; color:#00e599; margin-right:0.25rem;">Sign In</a>
+
+        <a href="/free-website.html" class="btn btn-yellow">Get Free Website</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <div class="auth-badge">
+        <span style="width:6px; height:6px; border-radius:50%; background:#00e599;"></span>
+        Customer Portal
+      </div>
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Sign in to track your free website application, review prototypes, and chat with your developer.</p>
+
+      <div id="errorAlert" class="error-msg"></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="input-group">
+          <label for="emailInput">Email Address</label>
+          <input type="email" id="emailInput" class="form-input" placeholder="you@company.com" required autofocus autocomplete="username">
+        </div>
+
+        <div class="input-group">
+          <label for="passwordInput">Password</label>
+          <input type="password" id="passwordInput" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+
+        <div class="remember-row">
+          <label class="remember-label">
+            <input type="checkbox" id="rememberMeCheckbox" style="accent-color: #ffd43b;">
+            Remember me for 30 days
+          </label>
+          <a href="/forgot-password" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit">Sign In to Dashboard &rarr;</button>
+      </form>
+
+      <div class="info-footer-note">
+        Don’t have an account yet?<br>
+        WebNavi accounts are created automatically when you <a href="/free-website">Apply for a Free Website</a>.
+      </div>
+    </div>
+  </main>
+
+  <script>
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const rememberMe = document.getElementById('rememberMeCheckbox').checked;
+      const errBox = document.getElementById('errorAlert');
+      const btn = document.getElementById('submitBtn');
+
+      errBox.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Verifying credentials...';
+
+      try {
+        const res = await fetch('/api/customer/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, rememberMe })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          btn.textContent = 'Redirecting...';
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect') || '/customer/dashboard';
+          window.location.href = redirect;
+        } else {
+          errBox.textContent = data.error || 'Invalid email or password.';
+          errBox.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Sign In to Dashboard →';
+        }
+      } catch (err) {
+        errBox.textContent = 'Network error. Please try again.';
+        errBox.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Sign In to Dashboard →';
+      }
+    }
+  </script>
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <a href="/" class="brand">
+          <span class="brand-glyph">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+              <polyline points="4 17 9 7 12 13 15 7 20 17" />
+            </svg>
+          </span>
+          <span>WebNavi</span>
+        </a>
+
+        <div class="system-status-indicator">
+          <span class="pulse-dot"></span>
+          <span>All Systems Operational</span>
+        </div>
+
+        <div class="footer-sublinks">
+          <a href="/" class="footer-sublink">Home</a>
+          <a href="/#how-it-works" class="footer-sublink">How It Works</a>
+          <a href="/#the-math" class="footer-sublink">Why Free</a>
+          <a href="/#founder-note" class="footer-sublink">Founder Note</a>
+          <a href="javascript:void(0)" id="footerCookieSettingsLink" onclick="window.WebNaviPrivacy && window.WebNaviPrivacy.openSettings()" class="footer-sublink">Cookie Settings</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div>&copy; 2026 WebNavi. Sovereign Web Tools. All rights reserved.</div>
+        <div style="display: flex; gap: 1.5rem; align-items: center;">
+          <a href="/privacy" class="footer-sublink" style="color: var(--text-dim); text-decoration: none;" onmouseover="this.style.color='#00e599'" onmouseout="this.style.color='var(--text-dim)'">Privacy Policy</a>
+          <a href="/terms" class="footer-sublink" style="color: var(--text-dim); text-decoration: none;" onmouseover="this.style.color='#00e599'" onmouseout="this.style.color='var(--text-dim)'">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/privacy-consent.js"></script>
+</body>
+</html>
+

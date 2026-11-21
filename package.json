@@ -1,0 +1,21 @@
+{
+  "name": "webnavi",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-routes.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "WebNavi domain management backend",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.11.1",
+    "dotenv": "^18.0.9",
+    "express": "^4.21.2",
+    "pdfkit": "^0.20.2",
+    "resend": "^6.38.0"
+  }
+}

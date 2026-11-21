@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <linearGradient id="webnaviGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FFA8" />
+      <stop offset="100%" stop-color="#00D285" />
+    </linearGradient>
+  </defs>
+  <!-- WebNavi Signature Chevron Glyph (Transparent Background) -->
+  <polyline points="85 363 192 149 256 277 320 149 427 363"
+            stroke="url(#webnaviGreen)"
+            stroke-width="55"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+</svg>
+
