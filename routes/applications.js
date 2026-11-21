@@ -180,14 +180,20 @@ router.post('/', optionalCustomerAuth, (req, res, next) => {
 
     const app = projectStore.createApplication(formData);
 
-    // Dispatch transactional application confirmation email
+    // Dispatch transactional emails: applicant confirmation & owner alert
     try {
       emailService.sendApplicationConfirmationEmail({
         email: formData.email,
         fullName: formData.fullName || formData.name || '',
       }, app);
     } catch (e) {
-      console.warn('[Applications] Email notice:', e.message);
+      console.warn('[Applications] Customer email notice:', e.message);
+    }
+
+    try {
+      emailService.sendOwnerApplicationNotification(app, formData);
+    } catch (e) {
+      console.warn('[Applications] Owner email notice:', e.message);
     }
 
     // Issue cryptographically random customer capability token

@@ -308,10 +308,104 @@ function getApplicationConfirmationEmail({ fullName, ticketId, businessName, por
   };
 }
 
+/**
+ * 5. Owner/Admin New Application Alert Template
+ */
+function getOwnerApplicationNotificationEmail({
+  fullName,
+  businessName,
+  ticketId,
+  email,
+  phone,
+  preferredDomain,
+  city,
+  state,
+  description,
+  portalUrl,
+}) {
+  const safeName = escapeHtml(fullName || 'Not provided');
+  const safeBiz = escapeHtml(businessName || 'Not specified');
+  const safeTicket = escapeHtml(ticketId);
+  const safeEmail = escapeHtml(email || 'Not provided');
+  const safePhone = escapeHtml(phone || 'Not provided');
+  const safeDomain = escapeHtml(preferredDomain || 'None');
+  const safeLocation = escapeHtml([city, state].filter(Boolean).join(', ') || 'Not specified');
+  const safeDesc = escapeHtml(description || 'No description provided');
+  const safePortal = escapeHtml(portalUrl);
+
+  const contentHtml = `
+    <div style="display: inline-block; background-color: rgba(255, 212, 59, 0.15); border: 1px solid rgba(255, 212, 59, 0.35); border-radius: 4px; padding: 4px 10px; color: #ffd43b; font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px;">
+      Admin Alert &bull; New Application
+    </div>
+    <h1 style="color: #ffffff; font-size: 22px; font-weight: 800; margin: 0 0 14px 0;">New Free Website Application Received</h1>
+    <p style="color: #9ab3a8; font-size: 14px; line-height: 1.5; margin: 0 0 18px 0;">
+      A new website request was just submitted on WebNavi. Here are the client details:
+    </p>
+
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #020c08; border: 1px solid #143326; border-radius: 10px; margin: 16px 0; overflow: hidden; font-size: 13px;">
+      <tr>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #7b9489; width: 35%;">Ticket ID</td>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #ffd43b; font-family: monospace; font-weight: 700;">${safeTicket}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #7b9489;">Business Name</td>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #ffffff; font-weight: 700;">${safeBiz}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #7b9489;">Applicant Name</td>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #ffffff;">${safeName}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #7b9489;">Applicant Email</td>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #00e599;"><a href="mailto:${safeEmail}" style="color: #00e599; text-decoration: none;">${safeEmail}</a></td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #7b9489;">Phone</td>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #ffffff;">${safePhone}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #7b9489;">Preferred Domain</td>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #ffd43b;">${safeDomain}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #7b9489;">Location</td>
+        <td style="padding: 10px 14px; border-bottom: 1px solid #143326; color: #ffffff;">${safeLocation}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px; color: #7b9489; vertical-align: top;">Description</td>
+        <td style="padding: 10px 14px; color: #9ab3a8; line-height: 1.5;">${safeDesc}</td>
+      </tr>
+    </table>
+
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
+      <tr>
+        <td align="left">
+          <a href="${safePortal}" target="_blank" style="background-color: #00e599; color: #020c08; padding: 12px 24px; font-size: 14px; font-weight: 800; text-decoration: none; border-radius: 8px; display: inline-block;">
+            View Application Portal &rarr;
+          </a>
+        </td>
+      </tr>
+    </table>
+  `;
+
+  const text = `New Free Website Application Received\n\nTicket: ${ticketId}\nBusiness: ${businessName}\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nDomain: ${preferredDomain}\nPortal: ${portalUrl}`;
+
+  return {
+    subject: `[New Lead] Application for ${businessName} (${ticketId})`,
+    html: baseLayout({
+      title: `New Lead: ${businessName}`,
+      preheader: `New Free Website Application received from ${fullName} for ${businessName}.`,
+      contentHtml,
+    }),
+    text,
+  };
+}
+
 module.exports = {
   getVerificationEmail,
   getPasswordResetEmail,
   getOrderConfirmationEmail,
   getApplicationConfirmationEmail,
+  getOwnerApplicationNotificationEmail,
 };
 

@@ -26,6 +26,10 @@ class EmailService {
     return (process.env.EMAIL_FROM || 'WebNavi <onboarding@resend.dev>').trim();
   }
 
+  getOwnerEmail() {
+    return (process.env.OWNER_EMAIL || process.env.ADMIN_EMAIL || 'techgoworld@gmail.com').trim();
+  }
+
   getBaseUrl() {
     return (process.env.APP_BASE_URL || 'http://localhost:3000').trim().replace(/\/+$/, '');
   }
@@ -326,6 +330,35 @@ class EmailService {
 
     return this.sendEmail({
       to: customer.email,
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
+    });
+  }
+
+  /**
+   * Sends owner/admin alert notification when a new free website application is submitted.
+   */
+  async sendOwnerApplicationNotification(application, formData = {}) {
+    const ownerEmail = this.getOwnerEmail();
+    if (!ownerEmail) return { success: false, error: 'No owner email configured' };
+
+    const portalUrl = `${this.getBaseUrl()}/application/${application.client_id || application.clientId}`;
+    const template = emailTemplates.getOwnerApplicationNotificationEmail({
+      fullName: formData.fullName || formData.name || application.fullName,
+      businessName: formData.businessName || application.businessName,
+      ticketId: application.ticket_id || application.ticketId,
+      email: formData.email || application.email,
+      phone: formData.phone || application.phone,
+      preferredDomain: formData.preferredDomain || application.preferredDomain,
+      city: formData.city || application.city,
+      state: formData.state || application.state,
+      description: formData.description || application.description,
+      portalUrl,
+    });
+
+    return this.sendEmail({
+      to: ownerEmail,
       subject: template.subject,
       html: template.html,
       text: template.text,
