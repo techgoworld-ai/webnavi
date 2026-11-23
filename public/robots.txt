@@ -8,3 +8,4 @@ Disallow: /forgot-password
 Disallow: /reset-password
 
 Sitemap: https://digitalproducthb.shop/sitemap.xml
+

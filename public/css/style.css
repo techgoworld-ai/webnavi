@@ -79,30 +79,97 @@ body {
   outline-offset: 2px;
 }
 
-/* Top Notification Banner */
+/* Top Notification Banner - Single Line Responsive Marquee Ticker */
 .top-bar {
-  background: #0D1612;
+  background: #09100C;
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.5rem 1rem;
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  text-align: center;
+  height: 38px;
+  min-height: 38px;
+  overflow: hidden;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  width: 100%;
+}
+
+.top-bar-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 3rem;
+  width: max-content;
+  will-change: transform;
+}
+
+.top-bar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .top-bar-badge {
   background: rgba(0, 229, 153, 0.15);
   color: var(--accent-green);
   border: 1px solid rgba(0, 229, 153, 0.35);
-  padding: 0.15rem 0.5rem;
+  padding: 0.15rem 0.55rem;
   border-radius: var(--radius-sm);
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   letter-spacing: 0.05em;
   font-family: var(--font-mono);
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.top-bar-text {
+  white-space: nowrap;
+}
+
+/* Fallback for unnested spans */
+.top-bar > span {
+  white-space: nowrap;
+}
+
+/* On large screens (desktops): cleanly centered in a single line */
+@media (min-width: 992px) {
+  .top-bar-track {
+    justify-content: center;
+    width: 100%;
+    animation: none;
+  }
+  .top-bar-item:nth-child(2) {
+    display: none;
+  }
+}
+
+/* On mobile and tablet devices: smooth, continuous moving ticker in a single line */
+@media (max-width: 991px) {
+  .top-bar {
+    justify-content: flex-start;
+  }
+  .top-bar-track {
+    animation: topBarMarquee 22s linear infinite;
+  }
+  .top-bar-track:hover,
+  .top-bar-track:active {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes topBarMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* Navigation */
