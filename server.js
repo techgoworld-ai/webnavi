@@ -209,6 +209,21 @@ app.get(['/domains', '/domains.html'], (req, res) => {
   res.redirect('/free-website.html');
 });
 
+// Blog index & article routes
+app.get(['/blog', '/blog/', '/blog/index.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'blog', 'index.html'));
+});
+
+app.get('/blog/:slug', (req, res, next) => {
+  const fs = require('fs');
+  const slug = req.params.slug.replace(/\.html$/, '');
+  const filePath = path.join(__dirname, 'public', 'blog', `${slug}.html`);
+  if (fs.existsSync(filePath)) {
+    return res.sendFile(filePath);
+  }
+  next();
+});
+
 // Fallback to index.html for frontend navigation
 app.use((req, res, next) => {
   if (req.method === 'GET' && !req.path.startsWith('/api/')) {
