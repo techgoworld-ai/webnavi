@@ -38,9 +38,6 @@
     var body = document.body;
     body.insertBefore(banner, body.firstChild);
 
-    // ── Update mobile-nav panel offset ────────────────────────────────────
-    updateMobileNavOffset(true);
-
     // ── Close button ──────────────────────────────────────────────────────
     var closeBtn = document.getElementById('launchBannerClose');
     if (closeBtn) {
@@ -55,16 +52,6 @@
     if (!banner) return;
     banner.classList.add('hidden');
     localStorage.setItem(STORAGE_KEY, '1');
-    // Update mobile panel offset after banner collapses
-    setTimeout(function () { updateMobileNavOffset(false); }, 450);
-  }
-
-  function updateMobileNavOffset(bannerVisible) {
-    var panel = document.getElementById('mobileNavPanel');
-    if (!panel) return;
-    // topbar(38) + navbar(64) = 102 without banner
-    // banner is ~42px
-    panel.style.top = bannerVisible ? '144px' : '102px';
   }
 
   if (document.readyState === 'loading') {
@@ -73,3 +60,4 @@
     init();
   }
 })();
+
