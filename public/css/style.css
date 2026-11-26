@@ -2098,10 +2098,130 @@ body {
   }
 }
 
+/* ==========================================================================
+   HAMBURGER MENU & MOBILE NAV — Full Responsive System
+   ========================================================================== */
+
+/* Hamburger button — hidden on desktop */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+  z-index: 200;
+}
+.hamburger-btn:hover { background: rgba(0,229,153,0.08); }
+.hamburger-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+}
+/* X state when menu open */
+.hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; width: 0; }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile slide-down nav panel */
+.mobile-nav-panel {
+  display: none;
+  position: fixed;
+  top: 102px; /* topbar(38px) + navbar(64px) */
+  left: 0;
+  right: 0;
+  z-index: 150;
+  background: rgba(8, 12, 10, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1.25rem 1.5rem 2rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.mobile-nav-panel.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+.mobile-nav-links {
+  list-style: none;
+  margin: 0 0 1.25rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.mobile-nav-links li a {
+  display: block;
+  padding: 0.75rem 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #d7e0db;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+.mobile-nav-links li:last-child a { border-bottom: none; }
+.mobile-nav-links li a:hover { color: #00e599; padding-left: 0.75rem; }
+.mobile-nav-links li a.active,
+.mobile-nav-links li a[style*="accent-green"] { color: #00e599; }
+
+.mobile-nav-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.mobile-nav-actions .btn-yellow {
+  width: 100%;
+  text-align: center;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+}
+.mobile-nav-actions .mobile-signin-link {
+  text-align: center;
+  color: #a4b8af;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.5rem;
+  display: block;
+}
+.mobile-nav-actions .mobile-signin-link:hover { color: #fff; }
+
+/* Body scroll lock when menu open */
+body.nav-open { overflow: hidden; }
+
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
+  .hamburger-btn { display: flex; }
+  .mobile-nav-panel { display: block; } /* shown via JS .open class */
+
+  /* Hide desktop nav links & sign-in on mobile */
+  .nav-links { display: none !important; }
+  #navCustomerLink { display: none !important; }
+
+  /* Slim down nav actions on mobile — only show flag + hamburger */
+  .nav-actions {
+    gap: 0.5rem;
   }
+  /* Hide the yellow CTA button in desktop nav on mobile (it's in mobile panel) */
+  .nav-actions .btn-yellow { display: none; }
+
+  /* Keep flag visible */
+  .currency-toggle-btn { display: flex; }
   .bento-grid {
     grid-template-columns: 1fr;
   }
