@@ -2488,13 +2488,62 @@ body {
 /* Body scroll lock when menu open */
 body.nav-open { overflow: hidden; }
 
+/* Blog Hub Cards (Responsive Desktop + Mobile) */
+.blog-featured-card {
+  background: rgba(14, 22, 18, 0.7);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  transition: border-color 0.25s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2.5rem;
+}
+.blog-featured-card:hover,
+.blog-list-card-horiz:hover {
+  border-color: rgba(0, 229, 153, 0.4);
+}
+.blog-list-card-horiz {
+  background: rgba(14, 22, 18, 0.7);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  transition: border-color 0.25s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2.5rem;
+}
+.blog-card-body {
+  padding: 1.75rem 2rem;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
 @media (max-width: 768px) {
   .hamburger-btn { display: flex; }
   .mobile-nav-panel { display: block; } /* shown via JS .open class */
 
-  /* Hide desktop nav links & sign-in on mobile */
+  /* Hide desktop nav links & sign-in on mobile across all pages */
   .nav-links { display: none !important; }
+  .nav-actions .nav-link,
   #navCustomerLink { display: none !important; }
+
+  /* Responsive blog hub cards */
+  .blog-list-card-horiz {
+    grid-template-columns: 1fr !important;
+  }
+  .blog-list-card-horiz .blog-list-thumb img {
+    height: 210px !important;
+    min-height: 210px !important;
+  }
+  .blog-featured-card .blog-card-body,
+  .blog-list-card-horiz .blog-card-body {
+    padding: 1.35rem !important;
+  }
 
   /* Slim down nav actions on mobile — only show flag + hamburger */
   .nav-actions {
