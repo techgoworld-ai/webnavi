@@ -2053,13 +2053,15 @@ body {
 
 .footer-sublinks {
   display: flex;
-  gap: 1.75rem;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
 }
 
 .footer-sublink {
   color: var(--text-dim);
   font-size: 0.85rem;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .footer-sublink:hover {
@@ -2070,10 +2072,52 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   padding-top: 2rem;
   border-top: 1px solid var(--border-subtle);
   font-size: 0.8rem;
   color: var(--text-dim);
+}
+
+/* ── Footer Mobile Responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 3rem 0 2rem;
+  }
+
+  /* Stack brand, status badge, and links vertically */
+  .footer-top-grid {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Links wrap into a tidy 2-column-ish grid */
+  .footer-sublinks {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 0.65rem 1.25rem;
+    width: 100%;
+  }
+
+  .footer-sublink {
+    font-size: 0.88rem;
+  }
+
+  /* Bottom row stacks on very small screens */
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  /* Legal links row on mobile */
+  .footer-bottom-row > div:last-child {
+    display: flex;
+    gap: 1.25rem;
+  }
 }
 
 /* Animations & Responsive */
