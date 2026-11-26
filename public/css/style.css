@@ -3487,6 +3487,15 @@ body.nav-open {
     padding: 2rem 0 4rem;
   }
 
+  .app-headline {
+    font-size: clamp(1.8rem, 7.5vw, 2.4rem);
+  }
+
+  .notice-title-row {
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
   .transparency-notice-box {
     flex-direction: column;
     gap: 0.85rem;
@@ -3509,6 +3518,15 @@ body.nav-open {
     grid-template-columns: 1fr;
   }
 
+  .form-label {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.75rem;
+  }
+
+  .form-section-title {
+    font-size: 1.15rem;
+  }
+
   .step-tabs-row {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -3524,15 +3542,51 @@ body.nav-open {
   }
 
   .form-header-row,
-  .form-actions-row,
   .eligibility-card-header {
     flex-wrap: wrap;
     gap: 0.65rem;
   }
 
+  .form-actions-row {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
   .form-actions-row .btn {
     width: 100%;
     justify-content: center;
+    white-space: normal;
+    text-align: center;
+    padding: 0.85rem 1rem !important;
+  }
+
+  .form-trust-banner,
+  .requirements-lock-notice {
+    align-items: flex-start;
+  }
+
+  #reviewSummaryCard {
+    padding: 1rem !important;
+    overflow-wrap: anywhere;
+  }
+
+  #reviewSummaryCard > div:first-child {
+    grid-template-columns: 1fr !important;
+  }
+
+  #alreadyAppliedCard h2 {
+    font-size: 1.25rem !important;
+  }
+
+  #alreadyAppliedCard .btn,
+  #stepPanelSuccess .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .application-success-box {
+    padding: 2rem 0.5rem;
   }
 
   .phone-input-row .country-code-select {

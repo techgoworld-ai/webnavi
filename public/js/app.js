@@ -894,7 +894,7 @@ function initMultiStepApplication() {
       : "To be chosen with engineer";
 
     summaryCard.innerHTML = `
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+      <div class="review-summary-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem; overflow-wrap: anywhere;">
         <div>
           <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Applicant Contact</div>
           <strong style="color: var(--text-white);">${escapeHtml(fullName.value)}</strong>
